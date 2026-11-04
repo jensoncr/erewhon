@@ -33,7 +33,7 @@
     },
     {
       "matches": [
-        "http://localhost:3000/*",
+        "http://localhost:3000/*"
       ],
       "js": ["presence.js"],
       "run_at": "document_start"
