@@ -1,16 +1,12 @@
 const TRUSTED_GROUP_ORDER_ORIGINS = new Set([
-  "https://erewhon-alpha.vercel.app",
-  "https://jensons2ndlunch.store",
-  "https://www.jensons2ndlunch.store",
+  "http://localhost:3000",
 ]);
 const HANDOFF_TTL_MS = 2 * 60 * 1000;
 const STORAGE_KEY = "pendingCartHandoff";
 const EREWHON_API = "https://ordersapi.enfmkt.com/v1";
 const PRIMARY_CART_TYPE_ID = "67c190abcf94f13b74707c27";
 const ORDER_TAB_PATTERNS = [
-  "https://erewhon-alpha.vercel.app/o/*",
-  "https://jensons2ndlunch.store/o/*",
-  "https://www.jensons2ndlunch.store/o/*",
+  "http://localhost:3000/o/*",
 ];
 
 async function connectAlreadyOpenOrderTabs() {
@@ -414,5 +410,5 @@ chrome.runtime.onStartup.addListener(() => {
 });
 
 chrome.action.onClicked.addListener(() => {
-  void chrome.tabs.create({ url: "https://jensons2ndlunch.store/" });
+  void chrome.tabs.create({ url: "http://localhost:3000/" });
 });

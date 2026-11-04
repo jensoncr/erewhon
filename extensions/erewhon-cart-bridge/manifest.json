@@ -19,9 +19,7 @@
   },
   "permissions": ["storage", "scripting"],
   "host_permissions": [
-    "https://erewhon-alpha.vercel.app/*",
-    "https://jensons2ndlunch.store/*",
-    "https://www.jensons2ndlunch.store/*",
+    "http://localhost:3000/*",
     "https://ordersapi.enfmkt.com/*"
   ],
   "background": {
@@ -35,9 +33,7 @@
     },
     {
       "matches": [
-        "https://erewhon-alpha.vercel.app/*",
-        "https://jensons2ndlunch.store/*",
-        "https://www.jensons2ndlunch.store/*"
+        "http://localhost:3000/*",
       ],
       "js": ["presence.js"],
       "run_at": "document_start"

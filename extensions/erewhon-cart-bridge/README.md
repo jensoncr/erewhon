@@ -2,19 +2,19 @@
 
 This small Chrome extension lets the group-order page hand a verified anonymous
 cart to `erewhon.com`. It requests local extension storage plus site access to
-the production group-order routes and Erewhon's cart page.
+the group-order routes and Erewhon's cart page.
 
 To merge a group cart into your Erewhon cart, it reads your Erewhon session token
 (`URT`) from `localStorage` on erewhon.com and sends it as a Bearer token to
 Erewhon's orders API at `ordersapi.enfmkt.com`. The token is not sent to this app
 or anywhere else.
 
-Each handoff is authorized by the extension from a trusted production order
+Each handoff is authorized by the extension from a trusted order
 page, expires after two minutes, and can be consumed only once. Untrusted cart
 links leave the user's current Erewhon cart untouched.
 
-Trusted order pages are limited to the project's stable Vercel aliases and the
-`jensons2ndlunch.store` apex and `www` domains.
+Trusted order pages are limited to `http://localhost:3000`. To host the app, add
+your own domain to `manifest.json`, `presence.js`, and `service-worker.js`.
 
 Version 0.3 reconnects already-open order tabs when the unpacked extension is
 installed, reloaded, or started with Chrome. The order page also preserves and

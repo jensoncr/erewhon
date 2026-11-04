@@ -1,9 +1,7 @@
 (() => {
   const INSTALL_KEY = "__jensonsSecondLunchPresenceV050";
   const TRUSTED_ORIGINS = new Set([
-    "https://erewhon-alpha.vercel.app",
-    "https://jensons2ndlunch.store",
-    "https://www.jensons2ndlunch.store",
+    "http://localhost:3000",
   ]);
 
   function announce() {

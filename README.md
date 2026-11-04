@@ -6,6 +6,8 @@ One person creates an order and shares the link. Everyone adds what they want fr
 
 This is a personal project. It isn't affiliated with or endorsed by Erewhon.
 
+It isn't hosted anywhere anymore, so run it locally. You'll need your own Convex project.
+
 ## Local development
 
 Install dependencies and start the app:
