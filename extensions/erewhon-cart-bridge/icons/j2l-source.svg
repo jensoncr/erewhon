@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="112" fill="#24543d"/>
+  <rect
+    x="18"
+    y="18"
+    width="476"
+    height="476"
+    rx="96"
+    fill="none"
+    stroke="#e6ede4"
+    stroke-width="14"
+  />
+  <text
+    x="247"
+    y="330"
+    text-anchor="middle"
+    fill="#fafaf5"
+    font-family="Arial Rounded MT Bold, Arial, sans-serif"
+    font-size="230"
+    font-weight="800"
+    letter-spacing="-18"
+  >J2L</text>
+</svg>

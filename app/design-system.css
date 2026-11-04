@@ -1,0 +1,285 @@
+/* Erewhon design system tokens — Tailwind v4 @theme.
+   Architecture is Linear/Cursor-derived (surface ramp + hairline borders
+   for depth, invert-pill CTAs, one scarce accent, fixed type ramp, transform/opacity-only motion).
+   Theme: paper light —
+     forest green #1a3930 (ink + CTA), slate green #325b4c (success),
+     sage green-grays (muted text), mint #e4f5ef, orange #e75a2e (the one
+     accent), electric blue #2d40ea (info), warm cornsilk (warning).
+   Light-only for now; dark is a later drop-in via these semantic names.
+   All fg/bg pairs pass WCAG AA (4.5:1 body, 3:1 large/UI). */
+
+@theme {
+  /* Surfaces — warm paper ramp. Depth = ramp + hairlines, not shadows. */
+  --color-surface: #f8f7f2;
+  --color-surface-raised: #fdfcf9;
+  --color-surface-sunken: #efeee6;
+  --color-surface-hover: #ecebe2;
+
+  /* Ink — forest green is the ink, not a decoration. */
+  --color-text: #1a3930;
+  --color-text-muted: #52645c;
+  --color-text-faint: #5e7268;
+
+  --color-border: #e2e3da;
+  --color-border-strong: #c9cec3;
+
+  /* The one accent — orange. Never large fills, never CTA bg;
+     brand-text is the AA-darkened variant for text on paper. */
+  --color-brand: #e75a2e;
+  --color-brand-text: #bc4218;
+  --color-brand-hover: #a83a13;
+  --color-brand-bg: #fbe9e0;
+
+  /* Primary CTA fill — forest green pill. */
+  --color-invert: #1a3930;
+  --color-invert-hover: #2a4c40;
+  --color-invert-text: #f8f7f2;
+
+  --color-success: #325b4c;
+  --color-success-bg: #e4f5ef;
+  --color-warning: #856000;
+  --color-warning-bg: #f8f1d4;
+  --color-danger: #bd2450;
+  --color-danger-bg: #fbe7ea;
+  --color-info: #2d40ea;
+  --color-info-bg: #e7e9fc;
+
+  --color-scrim: rgb(20 40 33 / 0.45);
+
+  /* Sequential data ramp — mint → forest, magnitude only, luminance-monotone. */
+  --color-heat-1: #dff0e7;
+  --color-heat-2: #b2d8c4;
+  --color-heat-3: #7fb89d;
+  --color-heat-4: #4c8f71;
+  --color-heat-5: #1a3930;
+
+  /* Type — Geist for UI, Fraunces (serif) for display/h1 only (the
+     Canela-style editorial move). font-sans/font-display come from
+     globals.css; mono carries money and numerals. */
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  --font-weight-normal: 400;
+  --font-weight-medium: 510;
+  --font-weight-semibold: 590;
+  --font-weight-bold: 680;
+
+  /* Fixed ramp — do not invent sizes. display + h1 render in font-display
+     (serif); h2 and below stay sans. */
+  --text-display: 32px;
+  --text-display--line-height: 38px;
+  --text-display--font-weight: 590;
+  --text-display--letter-spacing: -0.012em;
+  --text-h1: 24px;
+  --text-h1--line-height: 30px;
+  --text-h1--font-weight: 590;
+  --text-h1--letter-spacing: -0.01em;
+  --text-h2: 18px;
+  --text-h2--line-height: 24px;
+  --text-h2--font-weight: 590;
+  --text-h2--letter-spacing: -0.012em;
+  --text-h3: 15px;
+  --text-h3--line-height: 21px;
+  --text-h3--font-weight: 590;
+  --text-h3--letter-spacing: -0.008em;
+  --text-body: 14px;
+  --text-body--line-height: 21px;
+  --text-body--font-weight: 400;
+  --text-body--letter-spacing: -0.006em;
+  --text-small: 13px;
+  --text-small--line-height: 19px;
+  --text-small--font-weight: 400;
+  --text-small--letter-spacing: -0.003em;
+  --text-caption: 12px;
+  --text-caption--line-height: 16px;
+  --text-caption--font-weight: 400;
+  --text-caption--letter-spacing: 0em;
+
+  /* Shape — radius ramp maps to Tailwind utilities:
+     4px = rounded-sm (badges), 8px = rounded-lg (cards, inputs),
+     12px = rounded-xl (dialogs), rounded-full (buttons, avatars). */
+
+  /* Shadows — a budget spent only on things that float (menus, popovers,
+     dialogs). In-flow cards never get one. Green-gray, paper-soft. */
+  --shadow-sm: 0 1px 2px rgb(26 57 48 / 0.06);
+  --shadow-md: 0 4px 12px rgb(26 57 48 / 0.1);
+  --shadow-lg: 0 14px 32px rgb(26 57 48 / 0.12), 0 28px 70px rgb(26 57 48 / 0.1);
+
+  /* Motion — transform, opacity, color only. No springs, no scroll effects. */
+  --ease-out-quad: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --duration-fast: 120ms;
+  --duration-base: 160ms;
+  --duration-slow: 240ms;
+
+  --animate-rise-in: rise-in var(--duration-base) var(--ease-out-quart) backwards;
+  --animate-skeleton: skeleton-pulse 1200ms ease-in-out infinite;
+  --animate-spinner: spinner-rotate 800ms linear infinite;
+}
+
+/* Thinking orbs — staged loading indicator (rendered by components/Orbs.tsx,
+   documented at /design-system). Colors come off the green data ramp; cycles
+   run slower than the interaction ramp because loading is ambient. Modes:
+   thinking = waiting on something external, working = measurable progress,
+   done = collapse into the success check. The goo filter is a loading-only
+   exception to the transform/opacity rule. */
+.orbs {
+  position: relative;
+  display: inline-block;
+  flex: none;
+}
+.orbs-md {
+  width: 84px;
+  height: 44px;
+  --orb-spread: 22px;
+  --orb-relay: 26px;
+}
+.orbs-sm {
+  width: 56px;
+  height: 24px;
+  --orb-spread: 13px;
+  --orb-relay: 14px;
+}
+.goo-md {
+  filter: url(#ds-goo);
+}
+.goo-sm {
+  filter: url(#ds-goo-sm);
+}
+.orb {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: var(--radius-full, 9999px);
+}
+.orbs-md .orb {
+  width: 16px;
+  height: 16px;
+  margin: -8px 0 0 -8px;
+}
+.orbs-sm .orb {
+  width: 10px;
+  height: 10px;
+  margin: -5px 0 0 -5px;
+}
+.orb:nth-child(1) {
+  background: var(--color-heat-5);
+}
+.orb:nth-child(2) {
+  background: var(--color-heat-4);
+}
+.orb:nth-child(3) {
+  background: var(--color-heat-3);
+}
+.orbs-thinking .orb:nth-child(1) {
+  animation: orb-drift-a 2.6s var(--ease-out-quad) infinite;
+}
+.orbs-thinking .orb:nth-child(2) {
+  animation: orb-drift-b 2.6s var(--ease-out-quad) infinite;
+}
+.orbs-thinking .orb:nth-child(3) {
+  animation: orb-drift-c 2.6s var(--ease-out-quad) infinite;
+}
+.orbs-working .orb:nth-child(1) {
+  animation: orb-relay 1.3s var(--ease-out-quad) infinite;
+}
+.orbs-working .orb:nth-child(2) {
+  animation: orb-relay 1.3s var(--ease-out-quad) 0.22s infinite;
+}
+.orbs-working .orb:nth-child(3) {
+  animation: orb-relay 1.3s var(--ease-out-quad) 0.43s infinite;
+}
+.orbs-done .orb {
+  animation: orb-collapse 0.4s var(--ease-out-quart) forwards;
+}
+.orb-check {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  opacity: 0;
+  animation: orb-check-in 0.24s var(--ease-out-quart) 0.28s forwards;
+}
+
+@keyframes orb-drift-a {
+  0%,
+  100% {
+    transform: translate(calc(-1 * var(--orb-spread)), 0) scale(1);
+  }
+  50% {
+    transform: translate(calc(-0.2 * var(--orb-spread)), -6px) scale(1.15);
+  }
+}
+@keyframes orb-drift-b {
+  0%,
+  100% {
+    transform: scale(1.2);
+  }
+  50% {
+    transform: translateY(6px) scale(0.9);
+  }
+}
+@keyframes orb-drift-c {
+  0%,
+  100% {
+    transform: translate(var(--orb-spread), 0) scale(1);
+  }
+  50% {
+    transform: translate(calc(0.2 * var(--orb-spread)), -6px) scale(1.15);
+  }
+}
+@keyframes orb-relay {
+  0%,
+  100% {
+    transform: translateX(calc(-1 * var(--orb-relay))) scale(0.85);
+  }
+  50% {
+    transform: translateX(var(--orb-relay)) scale(1.1);
+  }
+}
+@keyframes orb-collapse {
+  to {
+    transform: translate(0, 0) scale(1.25);
+  }
+}
+@keyframes orb-check-in {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes skeleton-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.55;
+  }
+}
+
+@keyframes spinner-rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

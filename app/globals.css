@@ -1,0 +1,36 @@
+@import "tailwindcss";
+@import "./design-system.css";
+
+/* Fonts wired to next/font variables from app/layout.tsx.
+   All colors, type, shape, and motion tokens live in design-system.css. */
+@theme inline {
+  --font-sans: var(--font-geist-sans), system-ui, sans-serif;
+  --font-display: var(--font-fraunces), "Iowan Old Style", Georgia, serif;
+}
+
+:root {
+  /* The design system is light-only; keep form controls light too. */
+  color-scheme: light;
+}
+
+body {
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+}
+
+/* Horizontal rails (the menu section nav) show their overflow with an edge
+   fade instead of a scrollbar — an overlay scrollbar would sit on top of the
+   pills and swallow clicks near their bottom edge. */
+.scroll-rail {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.scroll-rail::-webkit-scrollbar {
+  display: none;
+}
+
+:where(a, button, input, select, textarea):focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 2px;
+}

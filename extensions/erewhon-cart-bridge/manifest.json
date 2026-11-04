@@ -1,0 +1,46 @@
+{
+  "manifest_version": 3,
+  "name": "Jenson's Second Lunch",
+  "version": "0.5.0",
+  "minimum_chrome_version": "102",
+  "description": "Opens a verified group order directly in the Erewhon cart.",
+  "icons": {
+    "16": "icons/j2l-16.png",
+    "32": "icons/j2l-32.png",
+    "48": "icons/j2l-48.png",
+    "128": "icons/j2l-128.png"
+  },
+  "action": {
+    "default_title": "Start Jenson's Second Lunch",
+    "default_icon": {
+      "16": "icons/j2l-16.png",
+      "32": "icons/j2l-32.png"
+    }
+  },
+  "permissions": ["storage", "scripting"],
+  "host_permissions": [
+    "https://erewhon-alpha.vercel.app/*",
+    "https://jensons2ndlunch.store/*",
+    "https://www.jensons2ndlunch.store/*",
+    "https://ordersapi.enfmkt.com/*"
+  ],
+  "background": {
+    "service_worker": "service-worker.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://erewhon.com/cart*"],
+      "js": ["cart-handoff.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://erewhon-alpha.vercel.app/*",
+        "https://jensons2ndlunch.store/*",
+        "https://www.jensons2ndlunch.store/*"
+      ],
+      "js": ["presence.js"],
+      "run_at": "document_start"
+    }
+  ]
+}
